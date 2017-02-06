@@ -33,3 +33,4 @@
   postgresql_user:
     name: "{{ ansible_ssh_user }}"
     db: "{{ django_db_name }}"
+
