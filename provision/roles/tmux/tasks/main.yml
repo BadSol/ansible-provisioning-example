@@ -1,0 +1,29 @@
+---
+- name: Install packages
+  become: yes
+  apt: name={{ item }} state=present update_cache=true
+  with_items:
+    - ruby-dev
+    - ruby
+    - tmux
+
+- name: Create tmuxinator directory
+  file:
+    path: "{{ ansible_env.HOME }}/.tmuxinator"
+    state: directory
+
+- name: Create the tmux config
+  template:
+    src: tmuxinator.conf.jinja2
+    dest: "{{ ansible_env.HOME }}/.tmuxinator/{{ project_name }}.yml"
+    force: yes
+
+- name: Add run command
+  lineinfile:
+    regexp: alias run
+    line: alias run="tmuxinator start {{ project_name }}"
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+
+- name: Install tmuxinator
+  become: yes
+  gem: name=tmuxinator user_install=no

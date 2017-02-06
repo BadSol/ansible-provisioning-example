@@ -1,0 +1,34 @@
+---
+- name: Update en_US.UTF-8 locale
+  become: yes
+  locale_gen: name=en_US.UTF-8 state=present
+
+- name: Set locale en_US.UTF-8
+  become: yes
+  command: update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+- name: Create virtualenv
+  pip:
+    name: pip
+    state: latest
+    virtualenv: "{{ venv_path }}"
+    virtualenv_python: python3
+
+- name: Install python project
+  pip:
+    requirements: "{{ project_path }}/requirements.txt"
+    virtualenv: "{{ venv_path }}"
+
+- name: Run migrations
+  django_manage:
+    command: migrate --noinput
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ venv_path }}"
+  environment: "{{ django_env }}"
+
+#- name: Collect static files
+#  django_manage:
+#    command: collectstatic --noinput
+#    app_path: "{{ project_path }}"
+#    virtualenv: "{{ venv_path }}"
+#  environment: "{{ django_env }}"

@@ -1,0 +1,14 @@
+---
+- hosts: all
+  roles:
+    - packages
+    - postgresql
+    - common
+
+- hosts: develop
+  roles:
+    - tmux
+
+- hosts: qa, production
+  roles:
+    - uwsgi  # might not work in production todo: try it on prod

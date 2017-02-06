@@ -1,0 +1,5 @@
+project_path: /vagrant
+django_allowed_hosts: localhost 127.0.0.1
+django_static_root: "{{ project_path }}/site_media"
+django_media_root: "{{ project_path }}/media"
+django_debug: True

@@ -1,0 +1,35 @@
+---
+- name: Add PostgreSQL repository key
+  become: yes
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Add official PostgreSQL repository
+  become: yes
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main
+    state: present
+
+- name: Install PostgreSQL 9.5
+  become: yes
+  apt: name={{ item }} state=latest update_cache=true
+  with_items:
+    - postgresql-9.5
+    - postgresql-contrib-9.5
+    - python-psycopg2
+    - libpq-dev
+
+- name: Create database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ django_db_name }}"
+    encoding: UTF-8
+
+- name: Create database user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ ansible_ssh_user }}"
+    db: "{{ django_db_name }}"

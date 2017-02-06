@@ -1,0 +1,42 @@
+upstream {{ project_name }}_django {
+    server 127.0.0.1:8000;
+}
+
+server {
+    listen 80;
+    server_name {{ nginx_host }};
+    access_log /var/log/nginx/{{ project_name }}.access.log;
+    error_log /var/log/nginx/{{ project_name }}.error.log;
+
+    client_max_body_size 500m;
+
+    location /robots.txt {
+        {% if 'production' in group_names %}
+          return 200 "User-agent: *\nDisallow: /admin/\n";
+        {% else %}
+          return 200 "User-agent: *\nDisallow: /\n";
+        {% endif %}
+    }
+
+    location /favicon.ico {
+        alias {{ django_static_root }}/favicon.png;
+    }
+
+    location /static {
+        alias {{ django_static_root }};
+    }
+
+    location /media {
+        alias {{ django_media_root }};
+    }
+
+    location / {
+        #To be uncommented after moving templates into django-cms
+        #include /etc/nginx/uwsgi_params;
+        #uwsgi_pass {{ project_name }}_django;
+
+        #To be removed after moving templates into django-cms
+        alias {{ raw_frontend_path }}/dist/;
+        index index.html;
+    }
+}

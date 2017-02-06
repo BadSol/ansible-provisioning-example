@@ -1,0 +1,20 @@
+project_name: pgx
+project_path: /srv/{{ project_name }}
+venv_path: "{{ project_path }}/venv"
+
+django_allowed_hosts: ".{{ nginx_host }} {{ nginx_host }}"
+django_static_root: "{{ project_path }}/public/static"
+django_media_root: "{{ project_path }}/public/media"
+django_debug: False
+django_secret_key: -j_@##pzd479=6mwkl#sq0#(def3g3m$@ldeuk(@-$q3&45j&
+
+django_db_name: "{{ project_name }}"
+
+
+django_env:
+  DEBUG: "{{ django_debug }}"
+  STATIC_ROOT: "{{ django_static_root }}"
+  MEDIA_ROOT: "{{ django_media_root }}"
+  ALLOWED_HOSTS: "{{ django_allowed_hosts }}"
+  DB_NAME: "{{ django_db_name }}"
+  SECRET_KEY: "{{ django_secret_key }}"
