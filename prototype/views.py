@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django.views.generic import FormView
+from prototype.forms import DocumentForm
 
 
-def prototype_view(request):
-    context = {'objects': 'test'}
-    return render(request, 'prototype/main.html', context)
+class DocumentFormView(FormView):
+    template_name = 'prototype/main.html'
+    form_class = DocumentForm
+    success_url = '/success/'

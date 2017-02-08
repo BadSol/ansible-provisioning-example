@@ -1,8 +1,8 @@
 from django.conf.urls import url
-from . import views
+from .views import DocumentFormView
 
 
-app_name = 'pgx'
+app_name = 'pgx_prototype'
 urlpatterns = [
-    url(r'^$', views.prototype_view, name='document_form'),
+    url(r'^$', DocumentFormView.as_view(), name='document_form'),
 ]

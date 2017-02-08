@@ -13,6 +13,7 @@
     - libxml2-dev
     - libxslt1-dev
     - git
+    - pdftk
 
 - name: Install pip packages
   become: yes
