@@ -22,6 +22,7 @@ def save_file_to_media(file_data, file_name):  # todo: test this method
     :return:
     """
     # print(settings.MEDIA_ROOT)
-    with open('{media_root}/ftf_files/{file_name}.fdf'.format(media_root=settings.MEDIA_ROOT, file_name=file_name), 'wb') as f:
+    with open('{media_root}/ftf_files/{file_name}.fdf'.format(media_root=settings.MEDIA_ROOT, file_name=file_name),
+              'wb') as f:
         fbf_file = File(f)
         fbf_file.write(file_data)
