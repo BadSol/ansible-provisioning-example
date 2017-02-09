@@ -2,8 +2,6 @@ import pytest
 
 from django.urls import reverse
 
-from prototype.views import DocumentFormView
-
 
 def test_document_form_view(client):  # Use request factory -DR
     response = client.get(reverse('pgx_prototype:document_form'))
