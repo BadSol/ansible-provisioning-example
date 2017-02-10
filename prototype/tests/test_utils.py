@@ -1,6 +1,6 @@
 import pytest
 
-from prototype.utils import generate_fdf_from_fields
+from prototype.utils import generate_fdf_from_fields, PgxPrototypeDocument
 
 
 def test_generate_fdf_from_fields_returning_correct_data_stream():
@@ -17,3 +17,16 @@ def test_generate_fdf_from_fields_returning_correct_data_stream():
                       b'>\nendobj\ntrailer\n\n<<\n/Root 1 0 R\n>>\n%%EOF\n\n'
 
     assert(result == expected_stream)
+
+
+def test_pbx_prototype_document_fail_initialization_without_arguments():
+    with pytest.raises(TypeError):
+        PgxPrototypeDocument()
+
+
+def test_pbx_prototype_document_returning_correct_fields_when_few_fields_use_the_same_value():
+    testing_values = [n for n in range(0, 5)]
+    document = PgxPrototypeDocument(*testing_values)
+    result = document.return_field_list()
+
+    assert result[1][1] == 1 and result[7][1] == 1

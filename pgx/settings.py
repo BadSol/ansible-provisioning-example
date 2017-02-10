@@ -119,3 +119,4 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = get_env_variable('MEDIA_ROOT')
+DJANGO_SETTINGS_MODULE = '/pgx/settings.py'

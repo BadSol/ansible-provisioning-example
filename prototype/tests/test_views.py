@@ -17,4 +17,4 @@ def test_correct_form_input_labels_in_document_form_view(client):
 
     response = client.get(reverse('pgx_prototype:document_form'))
 
-    assert(all(label in str(response.context.get('form'))) for label in labels)
+    assert(all((label in str(response.context.get('form')) for label in labels)))
