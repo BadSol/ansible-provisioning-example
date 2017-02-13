@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from prototype.forms import DocumentForm
 from prototype.utils import PgxPrototypeDocument
-from django.views.generic import TemplateView
 from django.http import HttpResponse
 
 
@@ -21,20 +20,19 @@ def document_form_view(request):
                 published_data_url_address=form_data['published_data_url_address'],
                 date=form_data['date'])
 
-            prototype_document.generate_and_save_pdf_to_media('this_file_is_generated_from_view')
+            pdf_output_name = 'pgx_prototype'
 
-            return render(request, 'prototype/success.html', {"test": 'test'})
+            prototype_document.generate_and_save_pdf_to_media(pdf_output_name)
+
+            with open('/vagrant/media/pdf_outputs/{pdf_file_name}.pdf'.format(pdf_file_name=pdf_output_name),
+                      'rb') as pdf:
+
+                response = HttpResponse(pdf.read(), content_type='application/pdf')
+                response['Content-Disposition'] = 'attachment; filename="{pdf_file_name}.pdf'.\
+                    format(pdf_file_name=pdf_output_name)
+
+                return response
         else:
             return redirect('pgx_prototype:document_form')
-
-
-# def some_view(request):
-#     response = HttpResponse(content_type='application/pdf')
-#     response['Content-Disposition'] = 'attachment; filename="media.pdf_outputs.this_file_is_generated_from_view.pdf"'
-#     return response
-
-
-class PdfSuccessView(TemplateView):  # todo: For now this view, always allows downloading last generated pdf
-    template_name = 'prototype/success.html'
 
 

@@ -31,7 +31,7 @@ class PgxPrototypeDocument:
         save_file_to_media(self.return_fdf_data(), file_name)
         return True
 
-    def generate_and_save_pdf_to_media(self, output_name):
+    def generate_and_save_pdf_to_media(self, output_name):  # todo: cut out file extension, so it wont generate .pdf.pdf
         ftf_file_name = 'temp_ftf_file'
         self.save_fdf_file_to_media(ftf_file_name)
 
@@ -39,6 +39,10 @@ class PgxPrototypeDocument:
 
 
 # todo: Move those methods to new generic class
+
+
+# class PdfDocumentManagement:
+
 
 def generate_fdf_from_fields(field_list):
     """
@@ -54,7 +58,6 @@ def generate_fdf_from_fields(field_list):
 
 def save_file_to_media(file_data, file_name):  # todo: test this method
     """
-    Saves fdf files to media folder
     :param file_data:
     :return:
     """
